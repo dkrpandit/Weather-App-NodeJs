@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Pune Weather</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Martian+Mono:wght@200&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Include padding and border in the element's total width and height */
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Martian Mono', monospace;
+        }
+
+        .box {
+            position: relative;
+            width: 366px;
+            height: 465px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #a1ddec;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .weatherIcon {
+            font-size: 89px;
+            margin-bottom: 295px;
+            position: absolute;
+        }
+
+        .info {
+            position: absolute;
+            margin-top: 125px;
+        }
+
+        .location {
+            padding: 18px;
+        }
+
+        .date-time {
+            padding-bottom: 15px;
+            font-size: 19px;
+        }
+
+        .temperature {
+            padding-bottom: 12px;
+        }
+
+        .minmax {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="weatherIcon" id="weatherIcon">
+            <i class="fa-solid fa-sun" style="color: rgb(235, 145, 27);"></i>
+        </div>
+
+        <div class="wave-one"></div>
+        <div class="wave-two"></div>
+        <div class="wave-three"></div>
+
+        <div class="info">
+            <h1 class="location"> <i class="fa-solid fa-street-view fa-flip"
+                    style="color: whitesmoke; margin-right: 5px;"></i>{%city%} ,{%Country%}</h1>
+            <p class="date-time" id="date-time">WED|OCT 23|12:34PM</p>
+            <h1 class="temperature">{%temperature%}°C</h1>
+            <p class="minmax">Min {%MinTemp%}°C | Max {%MaxTemp%}°C</p>
+        </div>
+
+        <!-- <div class="info">
+            <h1 class="location"> <i class="fa-solid fa-street-view fa-flip" style="color: whitesmoke; margin-right: 5px;"></i>Pune ,IN</h1>
+
+            <p class="date-time" id="date-time">WED|OCT 23|12:34PM</p>
+            <h1 class="temperature">25°C</h1>
+            <p class="minmax">Min 23°C | Max 34°C</p>
+        </div> -->
+
+    </div>
+    <script>
+        let weatherStatus = "{%weatherStatus%}"
+        // let weatherStatus = "Rainy"
+
+        if (weatherStatus == "Clouds") {
+            document.getElementById("weatherIcon").innerHTML = `<i class="fa-solid fa-cloud fa-beat-fade" style="color: whitesmoke;" ></i>`;
+        }
+        else if (weatherStatus == "Sunny") {
+            document.getElementById("weatherIcon").innerHTML = `<i class="fa-solid fa-sun" style="color: rgb(235, 145, 27);"></i>`;
+        }
+        else if (weatherStatus == "Rainy") {
+            document.getElementById("weatherIcon").innerHTML = `<i class="fa-solid fa-cloud-rain" style="color: whitesmoke;"></i>`;
+        }
+
+        const getCurrentDay = () => {
+            const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            const day = new Date();
+            // console.log(weekday[day.getDay()]);
+            return weekday[day.getDay()]
+        }
+        // getCurrentDay();          
+        const getCurrentMonth = () => {
+            const monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const month = new Date();
+            // console.log(monthArray[month.getMonth()], "/", month.getDate())
+            return `${monthArray[month.getMonth()]} ${month.getDate()}`
+        }
+        console.log(getCurrentMonth())
+        const getCurrentTime = () => {
+            const time = new Date();
+            let a = "AM";
+
+            let hours = time.getHours();
+            // let hours = 1;
+            let min = time.getMinutes();
+            // let min = 12
+            if (hours > 11) {
+                a = "PM"
+                hours = hours - 12
+            }
+            if (hours == 0) {
+                hours = 12;
+            }
+            if (min < 10) {
+                min = "0" + min
+                // hours = "0" + hours
+            }
+            if (hours < 10) {
+                // min = "0" + min
+                hours = "0" + hours
+            }
+            // console.log(hours,"|",min ,"|" , a);
+            return `${hours}:${min} ${a}`
+        }
+        // getCurrentTime();
+        // getCurrentMonth()
+
+        document.getElementById("date-time").innerText = `${getCurrentDay()} | ${getCurrentMonth()} | ${getCurrentTime()}`
+
+
+    </script>
+</body>
+
+</html>
